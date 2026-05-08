@@ -1,47 +1,61 @@
-# Application Portfolio Report - Draft EA Review
+# Application Portfolio Report - EA Review
 
-## Executive Summary
+## 📄 Executive Summary
 
-This report provides a formal assessment of the current application portfolio across all defined Enterprise Architecture (EA) domains. The inventory consists of 7 applications. The portfolio is characterized by a strong reliance on critical, high-risk systems primarily focused on core banking and customer interaction. Immediate focus should be placed on modernizing legacy integration points and standardizing authentication patterns to mitigate architectural risks identified in this review.
+This report provides a high-level analysis of the enterprise application portfolio, consisting of **7** applications. The goal is to identify architectural risks, assess criticality, and propose strategic modernization pathways.
 
-## Application Portfolio Overview
+## 📊 Application Portfolio Overview
+
 | Count | Description |
 | :---: | :--- |
-| **7** | Total number of applications in the current portfolio inventory. |
+| 7 | Total number of applications in the portfolio. |
 
-## Classification by EA Domain
-| Architecture Type | Number of Applications | Key Examples |
+## 🧩 Application Portfolio Breakdown by Architecture Type
+
+| Architecture Type | Count | Applications |
 | :--- | :---: | :--- |
-| System of Record Architecture | 3 | Core Banking, Data Warehouse, Joint Financing |
 | Touchpoint Architecture | 2 | Mobile Banking, Internet Banking |
 | Integration Architecture | 2 | API Gateway, ESB |
+| System of Record Architecture | 3 | Core Banking, Data Warehouse, Joint Financing |
 
-## Criticality and Risk View
-The portfolio contains two applications classified as **Critical** (Core Banking, Joint Financing), which demand the highest level of operational scrutiny. Five other applications are rated as High criticality. A key risk is the concentration of critical financial data within On-prem systems requiring manual or proprietary authentication methods.
+## 🚨 Criticality and Risk Analysis
 
-## Authentication and Security Observations
-Authentication patterns vary significantly:
-*   Two Touchpoint apps use modern standards (SSO/OIDC).
-*   The two System of Record apps rely on internal, potentially siloed authentication mechanisms (Internal Auth), posing integration challenges and risk if not standardized.
-*   Integration services utilize OIDC Token Validation or Service Accounts.
+The following applications are ranked by business criticality:
+| Application | Criticality |
+| :--- | :---: |
+| Core Banking | **Critical** |
+| Joint Financing | **Critical** |
+| Mobile Banking | **High** |
+| Internet Banking | **High** |
+| API Gateway | **High** |
+| ESB | **High** |
+| Data Warehouse | **High** |
 
-## Data Sensitivity Observations
-PII is prevalent across both Touchpoint and System of Record applications. Two critical systems handle "PII + Financial Data," demanding rigorous compliance controls and data lineage mapping.
+## 🔑 Authentication and Security Observations
 
-## Technology and Deployment Observations
-The portfolio spans a mix of environments:
-*   **On-prem**: Dominant for core, high-criticality systems (Core Banking, ESB). This suggests potential technical debt related to modernization.
-*   **Cloud/Hybrid**: Utilized by the Data Warehouse and Joint Financing, indicating ongoing digital transformation efforts.
+The inventory shows diverse authentication patterns, including SSO/OIDC for customer-facing services and Internal Auth for core systems. Consistent token validation at the API Gateway is observed.
 
-## Architecture Risks
-1.  **Monolithic Core Risk**: High criticality applications are largely based on older On-prem technologies (Core Banking), which presents a single point of failure and limits agility.
-2.  **Integration Sprawl**: The presence of both an ESB and a dedicated API Gateway suggests potential architectural complexity and redundant integration layers that require consolidation.
+## 🔒 Data Sensitivity Observations
 
-## Recommendations
-1.  **Modernization Initiative (Phase 1)**: Prioritize migrating the Core Banking application to a cloud-native or containerized architecture to reduce operational risk and increase scalability.
-2.  **Authentication Standardization**: Implement a centralized identity service across all critical applications, replacing "Internal Auth" methods with federated SSO/OIDC.
-3.  **Integration Rationalization**: Review the role of ESB versus API Gateway; rationalize these components into a unified integration platform to reduce complexity and maintenance overhead.
+Highest sensitivity data (PII + Financial Data) resides within System of Record architectures, necessitating stringent governance controls and regular audit reviews.
 
-## Open Questions
-*   What is the long-term strategy for retiring legacy On-prem systems?
-*   Can the Data Warehouse be leveraged as a single source of truth for risk metrics across all domains?
+## ⚙️ Technology and Deployment Observations
+
+The portfolio exhibits a hybrid state, mixing established On-prem legacy systems with newer Cloud deployments. Strategic focus must be placed on modernizing critical on-prem components to improve agility.
+
+## ⚠️ Architecture Risks
+
+1. **Monolithic Dependence:** High dependency on core System of Record applications that may lack modern scaling capabilities.
+2. **Deployment Bottlenecks:** Critical systems remaining On-prem introduces latency and limits rapid deployment cycles.
+3. **Integration Complexity:** The Integration Architecture layer requires ongoing monitoring to manage service sprawl.
+
+## 🚀 Strategic Modernization Recommendations
+
+1. Implement a phased migration plan for critical, high-risk on-prem systems into a managed cloud environment.
+2. Standardize API contracts and governance across the Integration Architecture domain.
+3. Conduct an immediate review of data residency and compliance policies for PII+Financial Data assets.
+
+## ❓ Open Questions
+
+* What is the current business case/timeline for retiring older components? 
+* Is there a formal, centralized repository for architecture decision records (ADRs)?
