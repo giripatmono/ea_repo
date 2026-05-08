@@ -1,1 +1,0 @@
-This file was created and updated by the OpenClaw assistant as a placeholder for commit testing.
