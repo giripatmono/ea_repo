@@ -1,34 +1,57 @@
-# Application Portfolio Report: Enterprise Architecture Review
+### Application Portfolio Report: Enterprise Architecture Review
 
-This report analyzes the applications within the organization to provide strategic insights for enterprise architecture review and modernization efforts. The analysis is based on application data sourced from the inventory file.
+**Date Generated:** 2026-05-08
+**Source Inventory:** Subagent Task Data
 
-## 📊 Summary Dashboard
-| Metric | Value | Details |
-| :--- | :--- | :--- |
-| Total Applications | 6 | Mobile Banking, Internet Banking, API Gateway, ESB, Core Banking, Data Warehouse |
-| Criticality (High/Critical) | 5 / 1 | Only one application (Data Warehouse) is marked 'High' while the rest are high or critical. *Correction: Core Banking is Critical.* All other listed systems are High. |
-| PII Sensitivity Count | 3 | Mobile Banking, Internet Banking, Core Banking (all handle PII). |
+---
 
-## 🏛️ Application Portfolio Breakdown
-### Touchpoint Architecture (Front-End / User Facing)
-*   **Mobile Banking:** *Classification:* Customer Experience. *Criticality:* High. *Data Sensitivity:* PII. *Auth Pattern:* SSO/OIDC. *Deployment:* Mixed (On-prem/Cloud). *Risks:* User experience scaling, platform compatibility. *Recs:* Prioritize mobile performance and security hardening.
-*   **Internet Banking:** *Classification:* Customer Experience. *Criticality:* High. *Data Sensitivity:* PII. *Auth Pattern:* SSO/OIDC. *Deployment:* On-prem. *Risks:* Potential modernization required for legacy web infrastructure. *Recs:* Evaluate migration to modern, cloud-native front-end services.
+### 📊 Summary Dashboard
 
-### Integration Architecture (Middleware / Connectivity)
-*   **API Gateway:** *Classification:* Infrastructure Backbone. *Criticality:* High. *Data Sensitivity:* Token Metadata. *Auth Pattern:* OIDC Token Validation. *Deployment:* On-prem. *Risks:* Bottleneck risk; need for robust scaling policies. *Recs:* Ensure high availability and implement strict rate limiting/WAF protection.
-*   **ESB:** *Classification:* Integration Layer. *Criticality:* High. *Data Sensitivity:* Transactional Data. *Auth Pattern:* Service Account. *Deployment:* On-prem. *Risks:* Monolithic architecture, potential scaling limitations, technical debt from legacy protocols (ISO8583). *Recs:* Strategic decoupling into modern, event-driven services to reduce complexity and increase elasticity.
+| Metric | Value |
+| :--- | :--- |
+| Total Applications Analyzed | 6 |
+| Criticality - High/Critical | 5 (83.3%) |
+| Touchpoint Systems | 2 |
+| Integration Systems | 2 |
+| System of Record Systems | 2 |
+| Data Sensitivity Exposure | PII + Financial Data (Core Banking) |
 
-### System of Record Architecture (Back-End / Data)
-*   **Core Banking:** *Classification:* Core Business Function. *Criticality:* Critical. *Data Sensitivity:* PII + Financial Data. *Auth Pattern:* Internal Auth. *Deployment:* On-prem. *Risks:* Legacy system lock-in, high operational risk due to critical nature. *Recs:* Initiate a long-term modernization roadmap (e.g., core banking replacement) while ensuring robust integration stability in the interim.
-*   **Data Warehouse:** *Classification:* Analytics & Intelligence. *Criticality:* High. *Data Sensitivity:* PII + Aggregated Data. *Auth Pattern:* AD/LDAP. *Deployment:* Cloud. *Risks:* Data latency between source and warehouse (Daily ETL). *Recs:* Investigate near real-time data streaming from upstream systems to improve analytical timeliness.
+### 🌳 Application Portfolio Breakdown by Architecture Type
 
-## 🎯 Architecture Risks & Modernization Recommendations
-### Architectural Risks Identified:
-1.  **Monolithic Dependency:** High reliance on the ESB for critical transaction routing creates a severe single point of failure risk across multiple domains (Integration).
-2.  **Data Latency:** The current daily ETL process introduces unavoidable data latency, limiting the ability to perform real-time business intelligence and risking operational decision-making based on stale data.
-3.  **Legacy Lock-in:** Core Banking's critical nature combined with an On-prem deployment creates significant vendor/technology lock-in risk, hindering agility and scaling.
+This breakdown classifies the applications based on their primary architectural role within the enterprise landscape.
 
-### Strategic Modernization Recommendations:
-*   **Decomposition Strategy (High Priority):** Decompose the ESB's functions into independent microservices. This reduces coupling, improves fault isolation, and allows individual services to be updated or scaled independently.
-*   **Cloud Migration Path (Long-Term):** Develop a phased strategy for migrating core business logic out of the on-prem Core Banking system toward cloud-native solutions, mitigating lock-in risk while maintaining data integrity during transition.
-*   **Event Sourcing Implementation:** Adopt an event-driven pattern across the integration layer to replace synchronous calls where appropriate, improving resilience and allowing multiple consumers (like Data Warehouse) to react asynchronously to business events in real-time.
+**1. Touchpoint Architecture (User Facing)**
+These systems directly interact with end-users, serving as the company's interface to its services.
+*   Mobile Banking: High Criticality. Handles PII. Uses modern SSO/OIDC.
+*   Internet Banking: High Criticality. Handles PII. Uses modern SSO/OIDC.
+
+**2. Integration Architecture (Connectivity)**
+These systems facilitate data flow and communication between other applications.
+*   API Gateway: High Criticality. Acts as the central entry point, validating OIDC tokens.
+*   ESB (Enterprise Service Bus): High Criticality. Handles Transactional Data but utilizes older **Service Account** authentication, posing a potential security risk.
+
+**3. System of Record Architecture (Data & Core Logic)**
+These systems house the authoritative data and critical business logic.
+*   Core Banking: **Critical** Criticality. The central system for financial operations, handling PII + Financial Data. Uses Internal Auth.
+*   Data Warehouse: High Criticality. Aggregates PII + Aggregated Data from various sources, leveraging AD/LDAP.
+
+### ⚠️ Risk Analysis Section
+
+Based on the inventory data and EA best practices, several risks have been identified:
+
+1.  **Legacy Authentication Exposure (ESB):** The ESB relies on a Service Account for authentication. This practice is an anti-pattern in modern security architectures, increasing the attack surface and making credential rotation complex.
+2.  **Core System Monolith Risk:** Core Banking, while critical and active, represents a monolithic system of record. Any change or failure here has maximum enterprise impact. Modernizing its deployment/scaling strategy is paramount.
+3.  **High Data Sensitivity Concentration:** The combination of PII and Financial Data within the Core Banking and Data Warehouse systems mandates continuous stringent compliance monitoring (PCI DSS, GDPR equivalents).
+4.  **Deployment Heterogeneity:** The mix of On-prem, Cloud, and hybrid deployments introduces operational complexity and potential gaps in security policy enforcement across environments.
+
+### 🚀 Strategic Modernization Recommendations
+
+To enhance resilience, scalability, and security posture, the following actions are recommended:
+
+1.  **Decouple & Microservices (Core Banking):** Initiate a phased migration of Core Banking's functionality into smaller, independent microservices to reduce monolithic risk and enable faster iteration cycles.
+2.  **Standardize Authentication:** Replace legacy Service Account authentication in the ESB with modern, token-based OAuth/OIDC methods, aligning it with the standards used by Mobile and Internet Banking.
+3.  **Cloud Migration Strategy (DWH):** While Data Warehouse is currently in the cloud, review its deployment strategy to ensure maximum cost efficiency and compliance adherence, potentially moving towards a managed service model.
+4.  **API Governance:** Strengthen API Gateway governance to not only validate tokens but also enforce strict rate limiting and schema validation for all incoming traffic.
+
+---
+*End of Report.*
