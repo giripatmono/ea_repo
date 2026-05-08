@@ -1,58 +1,66 @@
-# Application Portfolio Report - Q2 2026 (Draft)
+# Application Portfolio Report - EA Draft
 
-*Generated on Fri, 08 May 2026 by EA Agent.*
+**Date Generated:** May 8, 2026
+**Target Repository:** `ea_repo_clone` / output/reports/application-portfolio-report.md
 
 ## 1. Executive Summary
 
-This report provides an Enterprise Architecture review of the current application portfolio comprising five key systems. The portfolio is highly critical, with four out of five applications designated as High or Critical in risk posture. Data sensitivity levels are elevated across the board, requiring strict governance over PII and financial data. Most core services operate on-premise, indicating a continued reliance on legacy infrastructure for critical functions, though modern mobile/API solutions leverage hybrid cloud capabilities. Strategic focus must be placed on hardening authentication practices and accelerating modernization efforts for legacy System of Record components.
+This report provides a snapshot of the current application portfolio, detailing architectural classification, criticality, and risk posture. The portfolio currently consists of **5 applications**. A significant portion (80%) is classified as High Criticality, with one core banking system designated as Critical. Strategic focus should be placed on modernizing or consolidating integration components to mitigate architectural complexity and security risks associated with legacy deployment models where applicable.
 
 ## 2. Application Portfolio Overview
-A total of **5** applications were inventoried. The distribution across EA domains is as follows:
 
-| Domain | Application Count | Percentage | Description |
-| :--- | :--- | :--- | :--- |
-| Touchpoint Architecture | 2 | 40% | Customer-facing interfaces (Web/Mobile). |
-| Integration Architecture | 2 | 40% | Connectivity layers and middleware (API Gateway, ESB). |
-| System of Record Architecture | 1 | 20% | Primary data storage and business logic engine (Core Banking). |
+The inventory review indicates a balanced distribution across different EA domains:
+*   **Touchpoint Architecture:** 2 applications (Digital customer interfaces).
+*   **Integration Architecture:** 2 applications (Communication layers, e.g., API Gateway, ESB).
+*   **System of Record Architecture:** 1 application (Core business data source).
 
 ## 3. Classification by EA Domain
 
-*   **Touchpoint Architecture**: Mobile Banking and Internet Banking provide critical external access to the customer base. They maintain High Criticality and utilize modern SSO/OIDC authentication patterns.
-*   **Integration Architecture**: The API Gateway and ESB form the backbone of inter-application communication, rated High Criticality. The presence of both dedicated integration components suggests a mature (though possibly complex) service mesh structure.
-*   **System of Record Architecture**: Core Banking is the single most critical component, housing PII and Financial Data on-premise. Its stability is paramount to business operations.
+| EA Domain | Count | Applications | Description |
+| :--- | :--- | :--- | :--- |
+| Touchpoint Architecture | 2 | Mobile Banking, Internet Banking | Direct customer interfaces for digital interaction. |
+| Integration Architecture | 2 | API Gateway, ESB | Systems facilitating communication between internal and external applications. |
+| System of Record Architecture | 1 | Core Banking | Primary source of truth for critical business data. |
 
 ## 4. Criticality and Risk View
 
-The portfolio exhibits a strong concentration of High/Critical risk:
-*   Core Banking (Critical): Single point of failure for financial data.
-*   Mobile Banking / Internet Banking (High): Direct customer interaction, high exposure to public-facing vulnerabilities.
-*   API Gateway / ESB (High): Infrastructure layer risk; compromise here could lead to widespread lateral movement or data exfiltration.
+The portfolio exhibits a high concentration of mission-critical components:
 
-**Architecture Risks:** The primary architectural risk is the reliance on an on-premise System of Record for core financial functions, which can impede agility and scalability compared to cloud-native patterns.
+*   **Critical (1):** Core Banking (PII + Financial Data) – Requires highest level of oversight and resilience.
+*   **High (4):** Mobile Banking, Internet Banking, API Gateway, ESB – These systems are vital to daily operations and customer experience but require proactive risk management.
 
 ## 5. Authentication and Security Observations
 
-Authentication mechanisms are generally robust:
-*   The customer touchpoints use modern **SSO/OIDC** flows.
-*   The integration layers utilize specialized token validation (API Gateway) or service account authentication (ESB).
-*   Core Banking uses an **Internal Auth** mechanism, which requires rigorous internal auditing to ensure it meets modern compliance standards equivalent to external SSO controls.
+Authentication patterns are generally modernizing:
+*   **SSO/OIDC:** Used for primary external touchpoints (Mobile Banking, Internet Banking).
+*   **Internal Auth / Service Account:** Used by core systems (Core Banking, ESB), indicating a potential area for standardizing security practices across the entire estate.
 
 ## 6. Data Sensitivity Observations
 
-PII is prevalent across three critical applications (Mobile, Internet, Core Banking). The ESB handles 'Transactional Data', and the API Gateway manages token metadata. This confirms that data classification efforts are broad but emphasizes the need for encryption-in-transit and at-rest policies across all components.
+Data sensitivity is high across the portfolio:
+*   **PII:** Present in Mobile Banking, Internet Banking, and Core Banking.
+*   **Financial Data/Transactional Data:** Handled by Core Banking and ESB, requiring stringent compliance controls.
+*   **Token Metadata:** Managed by the API Gateway, emphasizing the need for strong token validation protocols.
 
 ## 7. Technology and Deployment Observations
 
-The portfolio uses a mixed deployment model:
-*   Four of five applications (80%) are deployed on-premise, which is common for high-compliance financial systems but creates operational overheads regarding patching, scaling, and disaster recovery.
-*   Mobile Banking shows hybrid capability (`On-prem/Cloud`), suggesting ongoing migration efforts.
+Deployment models show a mix of modern cloud practices and traditional on-premise infrastructure:
+*   **Hybrid/Cloud (1):** Mobile Banking utilizes an On-prem/Cloud model.
+*   **On-prem (4):** The remaining applications are primarily hosted in a legacy On-prem environment, particularly within the Integration Architecture layer (ESB). This presents operational risk regarding scalability and maintenance.
 
-## 8. Recommendations
+## 8. Architecture Risks
 
-1.  **Decouple SOR (Core Banking):** Begin planning the phased cloud migration or microservices decomposition of Core Banking to reduce operational risk associated with monolithic, on-premise critical systems.
-2.  **Standardize Auth:** Review and standardize the authentication methods used by Core Banking to align with modern industry SSO/OIDC practices for consistency and reduced security attack surface.
-3.  **Strengthen Integration Security:** Audit the ESB’s internal access controls to ensure service account privileges are strictly limited (Principle of Least Privilege).
+1.  **Monolithic Dependency:** Reliance on older integration components (ESB) could create single points of failure or performance bottlenecks if not modernized.
+2.  **Legacy Hosting:** The high density of On-prem systems increases the technical debt and operational overhead risk profile.
+3.  **Security Standardization Gap:** Inconsistent authentication methods across domains present an attack surface vulnerability that requires standardization (e.g., moving toward centralized identity providers).
 
-## 9. Open Questions
-*   What is the current Disaster Recovery (DR) RTO/RPO for Core Banking?
-*   Are there plans to sunset any existing integration technologies (e.g., ESB)?
+## 9. Recommendations
+
+1.  **Integration Modernization:** Prioritize replacing or refactoring the ESB with a modern, containerized service mesh solution to improve scalability and reduce technical debt.
+2.  **Cloud Migration Strategy:** Develop a phased migration plan for high-criticality, on-prem applications (e.g., Core Banking services) to leverage cloud resiliency features while maintaining compliance.
+3.  **Security Baseline Enforcement:** Mandate the adoption of SSO/OIDC standards for all new and refactored internal APIs, moving away from isolated service accounts where possible.
+
+## 10. Open Questions
+
+*   What is the current SLA/RTO/RPO for the Core Banking system?
+*   Are there plans to de-commission any existing applications that are currently flagged as 'Active' but have low usage or high cost of maintenance?
