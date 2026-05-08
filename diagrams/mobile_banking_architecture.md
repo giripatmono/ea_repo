@@ -45,7 +45,7 @@ graph TD
     class APIGW high;
     class ESB high;
 ```
-
+ 
 ### Explanation of Components:
 *   **Customers:** The end-users initiating transactions.
 *   **Mobile Banking / Internet Banking:** The primary user-facing touchpoints.
