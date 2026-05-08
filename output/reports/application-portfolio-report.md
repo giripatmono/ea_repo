@@ -1,61 +1,66 @@
-# Application Portfolio Report - EA Review
+## Application Portfolio Report (Draft)
 
-## 📄 Executive Summary
+This report summarizes the current state of the application portfolio, providing insights into architectural domains, criticality, security posture, and strategic recommendations for EA review.
 
-This report provides a high-level analysis of the enterprise application portfolio, consisting of **7** applications. The goal is to identify architectural risks, assess criticality, and propose strategic modernization pathways.
+---
 
-## 📊 Application Portfolio Overview
+### 1. Executive Summary
 
+The current portfolio consists of **7** actively managed applications. The majority of applications fall under the **System of Record Architecture (3/7)**, indicating a high reliance on foundational systems. Criticality is distributed across both High and Critical levels, demanding focused risk mitigation efforts. A notable finding is the mixed deployment model (On-premise and Cloud), which presents potential complexity in operational governance and modernization strategies.
+
+### 2. Application Portfolio Overview
 | Count | Description |
-| :---: | :--- |
-| 7 | Total number of applications in the portfolio. |
+| :---: | --- |
+| 7 | Total applications analyzed in the portfolio inventory. |
 
-## 🧩 Application Portfolio Breakdown by Architecture Type
+### 3. Classification by EA Domain
+The portfolio is distributed across three primary architectural domains:
 
 | Architecture Type | Count | Applications |
 | :--- | :---: | :--- |
+| System of Record Architecture | 3 | Core Banking, Data Warehouse, Joint Financing |
 | Touchpoint Architecture | 2 | Mobile Banking, Internet Banking |
 | Integration Architecture | 2 | API Gateway, ESB |
-| System of Record Architecture | 3 | Core Banking, Data Warehouse, Joint Financing |
 
-## 🚨 Criticality and Risk Analysis
+### 4. Criticality and Risk View
+The portfolio demonstrates a high overall criticality, with 7 applications assessed as either High or Critical risk:
 
-The following applications are ranked by business criticality:
-| Application | Criticality |
-| :--- | :---: |
-| Core Banking | **Critical** |
-| Joint Financing | **Critical** |
-| Mobile Banking | **High** |
-| Internet Banking | **High** |
-| API Gateway | **High** |
-| ESB | **High** |
-| Data Warehouse | **High** |
+*   **Critical:** 2 (Core Banking, Joint Financing) - These systems are vital to core business operations and require immediate, robust protective measures.
+*   **High:** 5 (Mobile Banking, Internet Banking, API Gateway, ESB, Data Warehouse) - Significant operational importance requiring continuous monitoring.
 
-## 🔑 Authentication and Security Observations
+### 5. Authentication and Security Observations
+The portfolio utilizes a blend of modern and traditional authentication patterns:
 
-The inventory shows diverse authentication patterns, including SSO/OIDC for customer-facing services and Internal Auth for core systems. Consistent token validation at the API Gateway is observed.
+*   **SSO/OIDC Driven (2):** Mobile Banking and Internet Banking leverage industry-standard Single Sign-On protocols for user access, which is highly recommended practice.
+*   **Internal Auth (3):** Core Banking, Data Warehouse, and Joint Financing rely on internal authentication mechanisms (AD/LDAP or similar), requiring careful internal security governance.
+*   **API Validation (1):** The API Gateway uses OIDC Token Validation to secure integrations.
 
-## 🔒 Data Sensitivity Observations
+### 6. Data Sensitivity Observations
+Data sensitivity varies significantly across the portfolio:
 
-Highest sensitivity data (PII + Financial Data) resides within System of Record architectures, necessitating stringent governance controls and regular audit reviews.
+*   **PII Exposure (4):** Four applications handle Personally Identifiable Information, demanding stringent compliance controls (Mobile Banking, Internet Banking, Core Banking, Joint Financing).
+*   **Financial & Aggregated Data (2):** The core banking and data warehouse systems manage sensitive financial figures.
+*   **Transactional Metadata (1):** API Gateway manages token metadata.
 
-## ⚙️ Technology and Deployment Observations
+### 7. Technology and Deployment Observations
+The deployment landscape is hybrid:
 
-The portfolio exhibits a hybrid state, mixing established On-prem legacy systems with newer Cloud deployments. Strategic focus must be placed on modernizing critical on-prem components to improve agility.
+*   **On-premise (2):** Internet Banking, ESB. These applications may pose challenges regarding scalability and access to modern cloud services.
+*   **Cloud/Hybrid (3):** Mobile Banking, Data Warehouse, Joint Financing utilize the cloud or a hybrid model, offering agility but increasing network complexity.
 
-## ⚠️ Architecture Risks
+### 8. Architecture Risks & Strategic Recommendations
 
-1. **Monolithic Dependence:** High dependency on core System of Record applications that may lack modern scaling capabilities.
-2. **Deployment Bottlenecks:** Critical systems remaining On-prem introduces latency and limits rapid deployment cycles.
-3. **Integration Complexity:** The Integration Architecture layer requires ongoing monitoring to manage service sprawl.
+**Risks Identified:**
 
-## 🚀 Strategic Modernization Recommendations
+1.  **Monolithic Core Reliance:** The heavy concentration in System of Record applications (3/7) suggests potential coupling risk; modernization efforts should focus on isolating and abstracting core functions.
+2.  **Hybrid Complexity:** Managing security, patching, and compliance across both legacy On-premise systems (ESB) and modern Cloud services is operationally demanding.
+3.  **Security Divergence:** While front-ends use SSO/OIDC, critical internal systems rely on older authentication methods, creating potential weak points in the overall security posture.
 
-1. Implement a phased migration plan for critical, high-risk on-prem systems into a managed cloud environment.
-2. Standardize API contracts and governance across the Integration Architecture domain.
-3. Conduct an immediate review of data residency and compliance policies for PII+Financial Data assets.
+**Recommendations:**
 
-## ❓ Open Questions
+*   **Standardize Authentication:** Prioritize migrating all critical system authentication (Internal Auth) to modern identity standards (e.g., OIDC/SAML).
+*   **Decouple Core Systems:** Begin architectural decomposition of highly critical System of Record applications to improve resilience and allow for targeted modernization.
+*   **Cloud Strategy Review:** Formalize governance and cost management policies specifically addressing the hybrid deployment environment, focusing on migrating appropriate legacy systems to managed cloud services where possible.
 
-* What is the current business case/timeline for retiring older components? 
-* Is there a formal, centralized repository for architecture decision records (ADRs)?
+***
+*(End of Draft Report)*
