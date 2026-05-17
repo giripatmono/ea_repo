@@ -1,0 +1,40 @@
+# Replace @your-org/... with your real GitHub organization teams.
+
+# Default EA repository owner
+* @your-org/ea-governance
+
+# Principles and standards
+/principles/ @your-org/enterprise-architecture
+/standards/ @your-org/enterprise-architecture
+
+# Security-related architecture
+/principles/security-principles.md @your-org/security-architecture
+/standards/authentication-standards.md @your-org/security-architecture
+/standards/data-classification-standards.md @your-org/security-architecture
+
+# Integration architecture
+/principles/integration-principles.md @your-org/integration-architecture
+/standards/api-standards.md @your-org/integration-architecture
+/standards/integration-standards.md @your-org/integration-architecture
+/outputs/diagrams/ @your-org/integration-architecture
+
+# Application architecture and portfolio
+/principles/application-principles.md @your-org/application-architecture
+/standards/application-standards.md @your-org/application-architecture
+/inventories/application-inventory.csv @your-org/application-architecture
+/outputs/reports/ @your-org/application-architecture
+
+# Data architecture
+/principles/data-principles.md @your-org/data-architecture
+/inventories/data-inventory.csv @your-org/data-architecture
+
+# Infrastructure architecture
+/principles/infrastructure-principles.md @your-org/infrastructure-architecture
+/standards/deployment-standards.md @your-org/infrastructure-architecture
+/inventories/technology-inventory.csv @your-org/infrastructure-architecture
+
+# Architecture decisions
+/decisions/ @your-org/architecture-review-board
+
+# GitHub automation
+/.github/ @your-org/ea-governance

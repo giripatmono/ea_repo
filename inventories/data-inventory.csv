@@ -1,0 +1,7 @@
+data_asset_id,data_asset_name,authoritative_source,data_owner,classification,contains_personal_data,retention,consumers,notes
+DATA-001,Customer Profile,Core Banking,Data Governance / Customer Data Owner,Restricted,Yes,Per policy,"Mobile Banking; Internet Banking; Customer Onboarding App",Authoritative customer record
+DATA-002,Account Data,Core Banking,Core Banking Data Owner,Restricted,Yes,Per policy,"Mobile Banking; Internet Banking; Data Warehouse",Authoritative account data
+DATA-003,Transaction Data,Core Banking,Core Banking Data Owner,Restricted,Yes,Per policy,"ESB; Fraud Detection; Data Warehouse",High criticality transaction data
+DATA-004,API Token Metadata,OIDC Provider,Security Architecture,Confidential,May include user identifiers,Per policy,"API Gateway; Security Monitoring",Used for token validation and audit
+DATA-005,Fraud Risk Score,Fraud Detection,Fraud Risk,Restricted,Yes,Per policy,"ESB; Fraud Operations",Risk scoring output
+DATA-006,Portfolio Reporting Data,Data Warehouse,Data Office,Confidential,Aggregated,Per policy,"Analytics Users; Management Reporting",Aggregated reporting dataset

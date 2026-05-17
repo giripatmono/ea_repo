@@ -1,0 +1,8 @@
+integration_id,source_application,target_application,integration_type,protocol,data_subject,frequency,criticality,owner,status,notes
+INT-001,Mobile Banking,API Gateway,API,HTTPS/REST,Customer request,Real-time,High,API Platform Team,Active,Customer-facing API flow
+INT-002,Internet Banking,API Gateway,API,HTTPS/REST,Customer request,Real-time,High,API Platform Team,Active,Customer-facing API flow
+INT-003,API Gateway,ESB,API,HTTPS/REST,Validated transaction request,Real-time,High,Integration Team,Active,Gateway to middleware
+INT-004,ESB,Core Banking,Service,REST/ISO8583,Financial transaction,Real-time,Critical,Middleware Team,Active,Core transaction dependency
+INT-005,ESB,Data Warehouse,ETL/File,CSV/SFTP,Transaction summary,Daily,High,Data Platform Team,Active,Batch analytics feed
+INT-006,ESB,Fraud Detection,API,HTTPS/REST,Transaction risk screening,Real-time,High,Fraud Platform Team,Active,Fraud scoring dependency
+INT-007,Customer Onboarding App,API Gateway,API,HTTPS/REST,Customer onboarding request,Real-time,High,Digital Delivery Team,Proposed,Proposed onboarding flow

@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "application-inventory.schema.json",
+  "title": "Application Inventory Row",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "application_id",
+    "application_name",
+    "ea_domain",
+    "business_owner",
+    "technical_owner",
+    "users",
+    "data_classification",
+    "deployment_model",
+    "criticality",
+    "authentication",
+    "technology",
+    "status",
+    "lifecycle_stage",
+    "notes"
+  ],
+  "properties": {
+    "application_id": {
+      "type": "string",
+      "pattern": "^APP-[0-9]{3,}$"
+    },
+    "application_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "ea_domain": {
+      "type": "string",
+      "enum": [
+        "Touchpoint Architecture",
+        "Integration Architecture",
+        "System of Record Architecture",
+        "Data / Analytics Architecture",
+        "Security Architecture",
+        "Infrastructure Architecture"
+      ]
+    },
+    "business_owner": {
+      "type": "string"
+    },
+    "technical_owner": {
+      "type": "string"
+    },
+    "users": {
+      "type": "string"
+    },
+    "data_classification": {
+      "type": "string"
+    },
+    "deployment_model": {
+      "type": "string"
+    },
+    "criticality": {
+      "type": "string",
+      "enum": ["Critical", "High", "Medium", "Low"]
+    },
+    "authentication": {
+      "type": "string"
+    },
+    "technology": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["Proposed", "Active", "Inactive", "Retired", "Archived"]
+    },
+    "lifecycle_stage": {
+      "type": "string",
+      "enum": ["Plan", "Build", "Run", "Modernize", "Sunset", "Retired", "Archived"]
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}

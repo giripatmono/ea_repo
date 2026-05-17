@@ -1,0 +1,6 @@
+risk_id,title,area,description,likelihood,impact,risk_level,owner,mitigation,status,target_date
+RISK-001,ESB concentration risk,Integration Architecture,Multiple critical transaction flows depend on ESB availability,Medium,High,High,Middleware Team,Define resilience monitoring and failover plan,Open,2026-06-30
+RISK-002,Incomplete data classification,Data Architecture,Some applications may not have complete data classification,Medium,Medium,Medium,Data Governance,Complete application and data inventory classification,Open,2026-06-30
+RISK-003,Local authentication exception,Security Architecture,Some legacy applications may not use centralized SSO,Medium,High,High,Security Architecture,Create migration or exception plan,Open,2026-07-31
+RISK-004,Technology lifecycle uncertainty,Infrastructure Architecture,EOL dates are not fully maintained in technology inventory,High,Medium,High,Infrastructure Architecture,Update lifecycle data and remediation roadmap,Open,2026-06-15
+RISK-005,Proposed onboarding app privacy gap,Application Architecture,Consent and retention requirements for proposed onboarding flow are not yet defined,Medium,High,High,Digital Delivery Team,Define privacy data flow and retention controls,Open,2026-06-30

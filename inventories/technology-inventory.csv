@@ -1,0 +1,7 @@
+technology_id,name,category,vendor,version,hosting_model,owner,lifecycle_status,eol_date,criticality,notes
+TECH-001,API Gateway,Integration Platform,Approved Vendor,TBD,On-prem,API Platform Team,Active,TBD,High,Approved gateway platform
+TECH-002,ESB / Middleware,Integration Platform,Approved Vendor,TBD,On-prem,Middleware Team,Active,TBD,Critical,Central service orchestration
+TECH-003,Core Banking Platform,Core System,Approved Vendor,TBD,On-prem,Core Banking Team,Active,TBD,Critical,System of Record
+TECH-004,Data Warehouse,Data Platform,Approved Vendor,TBD,Cloud,Data Platform Team,Active,TBD,High,Analytics and reporting
+TECH-005,OIDC Provider,Identity Platform,Approved Vendor,TBD,Hybrid,Security Architecture,Active,TBD,Critical,Central authentication
+TECH-006,Fraud Engine,Security Platform,Approved Vendor,TBD,On-prem,Fraud Platform Team,Active,TBD,High,Fraud detection service

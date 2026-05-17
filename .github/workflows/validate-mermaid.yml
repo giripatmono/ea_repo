@@ -1,0 +1,68 @@
+name: Validate Mermaid
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  mermaid:
+    name: Extract and validate Mermaid diagrams
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Extract Mermaid blocks
+        run: |
+          python - <<'PY'
+          import pathlib
+          import re
+          import sys
+
+          out = pathlib.Path(".mermaid-tmp")
+          out.mkdir(exist_ok=True)
+
+          count = 0
+          for path in pathlib.Path(".").rglob("*.md"):
+              if ".git" in path.parts or "node_modules" in path.parts:
+                  continue
+
+              text = path.read_text(encoding="utf-8")
+              for index, match in enumerate(re.finditer(r"```mermaid\s*\n(.*?)\n```", text, flags=re.S)):
+                  safe_name = path.as_posix().replace("/", "__").replace(" ", "_")
+                  target = out / f"{safe_name}_{index}.mmd"
+                  target.write_text(match.group(1), encoding="utf-8")
+                  count += 1
+
+          print(f"Found {count} Mermaid block(s).")
+          if count == 0:
+              sys.exit(0)
+          PY
+
+      - name: Install Mermaid CLI
+        run: |
+          npm install -g @mermaid-js/mermaid-cli
+
+      - name: Validate Mermaid syntax
+        run: |
+          if [ ! -d ".mermaid-tmp" ]; then
+            echo "No Mermaid diagrams found."
+            exit 0
+          fi
+
+          shopt -s nullglob
+          files=(.mermaid-tmp/*.mmd)
+
+          if [ ${#files[@]} -eq 0 ]; then
+            echo "No Mermaid diagrams found."
+            exit 0
+          fi
+
+          for file in "${files[@]}"; do
+            echo "Validating $file"
+            mmdc -i "$file" -o "$file.svg"
+          done

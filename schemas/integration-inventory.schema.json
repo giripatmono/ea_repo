@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "integration-inventory.schema.json",
+  "title": "Integration Inventory Row",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "integration_id",
+    "source_application",
+    "target_application",
+    "integration_type",
+    "protocol",
+    "data_subject",
+    "frequency",
+    "criticality",
+    "owner",
+    "status",
+    "notes"
+  ],
+  "properties": {
+    "integration_id": {
+      "type": "string",
+      "pattern": "^INT-[0-9]{3,}$"
+    },
+    "source_application": {
+      "type": "string",
+      "minLength": 1
+    },
+    "target_application": {
+      "type": "string",
+      "minLength": 1
+    },
+    "integration_type": {
+      "type": "string",
+      "enum": ["API", "Service", "Event", "Messaging", "ETL/File", "Database", "Manual", "Other"]
+    },
+    "protocol": {
+      "type": "string"
+    },
+    "data_subject": {
+      "type": "string"
+    },
+    "frequency": {
+      "type": "string"
+    },
+    "criticality": {
+      "type": "string",
+      "enum": ["Critical", "High", "Medium", "Low"]
+    },
+    "owner": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["Proposed", "Active", "Inactive", "Retired"]
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}

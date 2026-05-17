@@ -1,0 +1,9 @@
+application_id,application_name,ea_domain,business_owner,technical_owner,users,data_classification,deployment_model,criticality,authentication,technology,status,lifecycle_stage,notes
+APP-001,Mobile Banking,Touchpoint Architecture,Digital Banking,Mobile Platform Team,Customers,Restricted - Customer PII,Hybrid,High,SSO/OIDC,Mobile App + API,Active,Run,Sanitized sample
+APP-002,Internet Banking,Touchpoint Architecture,Digital Banking,Web Platform Team,Customers,Restricted - Customer PII,On-prem,High,SSO/OIDC,Web Application,Active,Run,Sanitized sample
+APP-003,API Gateway,Integration Architecture,Integration Team,API Platform Team,Applications,Confidential - Token Metadata,On-prem,High,OIDC Token Validation,API Gateway,Active,Run,Approved gateway
+APP-004,ESB,Integration Architecture,Integration Team,Middleware Team,Applications,Restricted - Transactional Data,On-prem,Critical,Service Account,ESB / Middleware,Active,Run,Central integration layer
+APP-005,Core Banking,System of Record Architecture,Core Banking,Core Banking Team,Operations,Restricted - Customer and Financial Data,On-prem,Critical,Internal Auth,Core Banking Platform,Active,Run,Authoritative account and transaction system
+APP-006,Data Warehouse,Data / Analytics Architecture,Data Office,Data Platform Team,Analytics Users,Restricted - Aggregated Customer Data,Cloud,High,AD/LDAP,Data Warehouse,Active,Run,Analytics platform
+APP-007,Fraud Detection,Security Architecture,Fraud Risk,Fraud Platform Team,Applications,Restricted - Risk Data,On-prem,High,Service Account,Fraud Engine,Active,Run,Transaction risk screening
+APP-008,Customer Onboarding App,Touchpoint Architecture,Digital Banking,Digital Delivery Team,Customers,Restricted - Customer PII,Cloud,High,OIDC,Web/Mobile,Proposed,Plan,Example proposed application for review

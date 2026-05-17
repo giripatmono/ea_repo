@@ -1,0 +1,93 @@
+name: Validate Inventory
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  inventory:
+    name: Validate CSV inventory files
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate required CSV headers and IDs
+        run: |
+          python - <<'PY'
+          import csv
+          import json
+          import pathlib
+          import sys
+
+          checks = [
+              {
+                  "csv": "inventories/application-inventory.csv",
+                  "schema": "schemas/application-inventory.schema.json",
+                  "id_field": "application_id"
+              },
+              {
+                  "csv": "inventories/integration-inventory.csv",
+                  "schema": "schemas/integration-inventory.schema.json",
+                  "id_field": "integration_id"
+              }
+          ]
+
+          errors = []
+
+          for check in checks:
+              csv_path = pathlib.Path(check["csv"])
+              schema_path = pathlib.Path(check["schema"])
+              id_field = check["id_field"]
+
+              if not csv_path.exists():
+                  errors.append(f"Missing CSV file: {csv_path}")
+                  continue
+
+              if not schema_path.exists():
+                  errors.append(f"Missing schema file: {schema_path}")
+                  continue
+
+              schema = json.loads(schema_path.read_text(encoding="utf-8"))
+              required = schema.get("required", [])
+
+              with csv_path.open(newline="", encoding="utf-8") as f:
+                  reader = csv.DictReader(f)
+                  headers = reader.fieldnames or []
+                  rows = list(reader)
+
+              missing = [field for field in required if field not in headers]
+              if missing:
+                  errors.append(f"{csv_path}: missing required columns: {missing}")
+
+              if not rows:
+                  errors.append(f"{csv_path}: file has no data rows")
+
+              seen = set()
+              for idx, row in enumerate(rows, start=2):
+                  value = (row.get(id_field) or "").strip()
+
+                  if not value:
+                      errors.append(f"{csv_path}: row {idx} missing {id_field}")
+                      continue
+
+                  if value in seen:
+                      errors.append(f"{csv_path}: duplicate {id_field}: {value}")
+                  seen.add(value)
+
+                  for field in required:
+                      if not (row.get(field) or "").strip():
+                          errors.append(f"{csv_path}: row {idx} missing value for {field}")
+
+          if errors:
+              print("Inventory validation failed:")
+              for error in errors:
+                  print(f"- {error}")
+              sys.exit(1)
+
+          print("Inventory validation passed.")
+          PY

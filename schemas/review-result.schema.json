@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "review-result.schema.json",
+  "title": "Architecture Review Result",
+  "type": "object",
+  "required": [
+    "review_id",
+    "system",
+    "review_date",
+    "overall_status",
+    "overall_risk",
+    "findings",
+    "required_actions",
+    "assumptions"
+  ],
+  "properties": {
+    "review_id": {
+      "type": "string"
+    },
+    "system": {
+      "type": "string"
+    },
+    "review_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "overall_status": {
+      "type": "string",
+      "enum": [
+        "Compliant",
+        "Partially Compliant",
+        "Non-Compliant",
+        "Not Enough Information"
+      ]
+    },
+    "overall_risk": {
+      "type": "string",
+      "enum": ["Critical", "High", "Medium", "Low"]
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "area", "status", "finding", "risk", "recommendation", "source"],
+        "properties": {
+          "id": { "type": "string" },
+          "area": { "type": "string" },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Compliant",
+              "Partially Compliant",
+              "Non-Compliant",
+              "Not Enough Information",
+              "Not Applicable"
+            ]
+          },
+          "finding": { "type": "string" },
+          "risk": { "type": "string" },
+          "recommendation": { "type": "string" },
+          "source": { "type": "string" }
+        }
+      }
+    },
+    "required_actions": {
+      "type": "array"
+    },
+    "assumptions": {
+      "type": "array"
+    }
+  }
+}
