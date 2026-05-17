@@ -62,7 +62,7 @@ Evaluate:
 
 Save final output as:
 
-`outputs/reviews/architecture-review-result.md`
+`outputs/reviews/architecture-review-result-yyyyMMdd-HHmm.md`
 
 ## Output Format
 

@@ -37,7 +37,7 @@ Read:
 
 Save final output as:
 
-`outputs/diagrams/application-integration-diagram.md`
+`outputs/diagrams/application-integration-diagram-yyyyMMdd-HHmm.md`
 
 ## Output Format
 

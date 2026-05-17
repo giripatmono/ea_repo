@@ -31,7 +31,7 @@ Read:
 
 Save final output as:
 
-`outputs/reports/application-portfolio-report.md`
+`outputs/reports/application-portfolio-report-yyyyMMdd-HHmm.md`
 
 ## Output Format
 
