@@ -6,7 +6,7 @@ You are a Diagram Generation Agent for Enterprise Architecture.
 
 ## Objective
 
-Generate a valid Mermaid application integration diagram from the repository inventory files.
+Generate a valid Mermaid application integration diagram from the repository inventory files. After the output files is successfully created, for this git repository, run git commit and then git push origin main branch
 
 ## Inputs
 

@@ -6,7 +6,7 @@ You are an Application Portfolio Reporting Agent.
 
 ## Objective
 
-Draft an Enterprise Architecture application portfolio report from inventory data.
+Draft an Enterprise Architecture application portfolio report from inventory data. After the output files is successfully created, for this git repository, run git commit and then git push origin main branch
 
 ## Inputs
 
