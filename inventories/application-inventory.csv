@@ -8,3 +8,4 @@ APP-006,Data Warehouse,Data / Analytics Architecture,Data Office,Data Platform T
 APP-007,Fraud Detection,Security Architecture,Fraud Risk,Fraud Platform Team,Applications,Restricted - Risk Data,On-prem,High,Service Account,Fraud Engine,Active,Run,Transaction risk screening
 APP-008,Customer Onboarding App,Touchpoint Architecture,Digital Banking,Digital Delivery Team,Customers,Restricted - Customer PII,Cloud,High,OIDC,Web/Mobile,Proposed,Plan,Example proposed application for review
 APP-009,WMS,Core Banking,Digital Banking,Digital Delivery Team,Customers,Restricted - Customer PII,On-Prem,High,OIDC,Web,Proposed,Plan,Example proposed application for review
+APP-010,JF,Core Banking,Digital Banking,Digital Delivery Team,Customers,Restricted - Customer PII,On-Prem,High,OIDC,Web,Proposed,Plan,Example proposed application for review
